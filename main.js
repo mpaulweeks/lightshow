@@ -11,24 +11,61 @@ const state = {
       window: Math.PI / 6,
     },
     {
-      origin: {x: 300, y: 100},
+      origin: {x: 200, y: 100},
       color: '#00FF00FF',
       angle: Math.PI * 0.5,
       window: Math.PI / 6,
     },
     {
-      origin: {x: 500, y: 100},
+      origin: {x: 300, y: 100},
       color: '#0000FFFF',
+      angle: Math.PI * 0.5,
+      window: Math.PI / 6,
+    },
+    {
+      origin: {x: 400, y: 100},
+      color: '#FFFF00FF',
+      angle: Math.PI * 0.5,
+      window: Math.PI / 6,
+    },
+    {
+      origin: {x: 500, y: 100},
+      color: '#00FFFFFF',
+      angle: Math.PI * 0.5,
+      window: Math.PI / 6,
+    },
+    {
+      origin: {x: 600, y: 100},
+      color: '#FF00FFFF',
       angle: Math.PI * 0.5,
       window: Math.PI / 6,
     },
   ],
   selected: undefined,
+  hover: undefined,
   mouse: {
     x: 0,
     y: 0,
   },
   mouseRadius: 50,
+};
+
+const getClosestLight = (state) => {
+  let nearestLight, nearestDistance;
+  state.lights.forEach(light => {
+    const distance = Math.sqrt(
+      Math.pow(state.mouse.x - light.origin.x, 2) +
+      Math.pow(state.mouse.y - light.origin.y, 2)
+    );
+    if (nearestDistance === undefined || distance < nearestDistance){
+      nearestLight = light;
+      nearestDistance = distance;
+    }
+  });
+  if (nearestDistance < state.mouseRadius) {
+    return nearestLight;
+  }
+  return null;
 }
 
 let spaceHeld;
@@ -52,22 +89,9 @@ window.addEventListener('keyup', e => {
 window.addEventListener('mousedown', e => {
   if (state.selected){
     state.selected = undefined;
-  } else {
-    let nearestLight, nearestDistance;
-    state.lights.forEach(light => {
-      const distance = Math.sqrt(
-        Math.pow(state.mouse.x - light.origin.x, 2) +
-        Math.pow(state.mouse.y - light.origin.y, 2)
-      );
-      if (nearestDistance === undefined || distance < nearestDistance){
-        nearestLight = light;
-        nearestDistance = distance;
-      }
-    });
-    if (nearestDistance < state.mouseRadius) {
-      state.selected = nearestLight;
-      state.selected.origin = state.mouse;
-    }
+  } else if (state.hover){
+    state.selected = state.hover;
+    state.selected.origin = state.mouse;
   }
   canvas.draw(state);
 });
@@ -79,6 +103,7 @@ window.addEventListener('mousemove', e => {
   if (state.selected) {
     state.selected.origin = {...newPoint};
   }
+  state.hover = getClosestLight(state);
   state.mouse = {...newPoint};
   canvas.draw(state);
 });

@@ -48,7 +48,7 @@ const draw = (s) => {
   ctx.lineWidth = 5;
   s.lights.forEach(light => {
     if (light !== s.selected){
-      ctx.strokeStyle = light.color;
+      ctx.strokeStyle = light === s.hover ? 'white' : light.color;
       ctx.beginPath();
       ctx.arc(light.origin.x, light.origin.y, s.mouseRadius/2, 0, 2*Math.PI, false);
       ctx.closePath();
