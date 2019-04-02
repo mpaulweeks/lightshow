@@ -5,37 +5,37 @@ canvas.calibrate();
 const state = {
   lights: [
     {
-      origin: {x: 100, y: 100},
+      origin: {x: 100, y: 300},
       color: '#FF0000FF',
       angle: Math.PI * 0.5,
       window: Math.PI / 6,
     },
     {
-      origin: {x: 200, y: 100},
+      origin: {x: 200, y: 300},
       color: '#00FF00FF',
       angle: Math.PI * 0.5,
       window: Math.PI / 6,
     },
     {
-      origin: {x: 300, y: 100},
+      origin: {x: 300, y: 300},
       color: '#0000FFFF',
       angle: Math.PI * 0.5,
       window: Math.PI / 6,
     },
     {
-      origin: {x: 400, y: 100},
+      origin: {x: 400, y: 300},
       color: '#FFFF00FF',
       angle: Math.PI * 0.5,
       window: Math.PI / 6,
     },
     {
-      origin: {x: 500, y: 100},
+      origin: {x: 500, y: 300},
       color: '#00FFFFFF',
       angle: Math.PI * 0.5,
       window: Math.PI / 6,
     },
     {
-      origin: {x: 600, y: 100},
+      origin: {x: 600, y: 300},
       color: '#FF00FFFF',
       angle: Math.PI * 0.5,
       window: Math.PI / 6,
@@ -107,3 +107,7 @@ window.addEventListener('mousemove', e => {
   state.mouse = {...newPoint};
   canvas.draw(state);
 });
+
+document.getElementById('header-close').addEventListener('click', () => {
+  document.getElementById('header').remove();
+})
