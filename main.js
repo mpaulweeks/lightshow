@@ -1,54 +1,5 @@
+import { state } from './state.js';
 import { canvas } from './canvas.js';
-
-canvas.calibrate();
-
-const state = {
-  lights: [
-    {
-      origin: {x: 100, y: 300},
-      color: '#FF0000FF',
-      angle: Math.PI * 0.5,
-      window: Math.PI / 6,
-    },
-    {
-      origin: {x: 200, y: 300},
-      color: '#00FF00FF',
-      angle: Math.PI * 0.5,
-      window: Math.PI / 6,
-    },
-    {
-      origin: {x: 300, y: 300},
-      color: '#0000FFFF',
-      angle: Math.PI * 0.5,
-      window: Math.PI / 6,
-    },
-    {
-      origin: {x: 400, y: 300},
-      color: '#FFFF00FF',
-      angle: Math.PI * 0.5,
-      window: Math.PI / 6,
-    },
-    {
-      origin: {x: 500, y: 300},
-      color: '#00FFFFFF',
-      angle: Math.PI * 0.5,
-      window: Math.PI / 6,
-    },
-    {
-      origin: {x: 600, y: 300},
-      color: '#FF00FFFF',
-      angle: Math.PI * 0.5,
-      window: Math.PI / 6,
-    },
-  ],
-  selected: undefined,
-  hover: undefined,
-  mouse: {
-    x: 0,
-    y: 0,
-  },
-  mouseRadius: 50,
-};
 
 const getClosestLight = (state) => {
   let nearestLight, nearestDistance;
@@ -74,7 +25,7 @@ window.addEventListener('keydown', e => {
     spaceHeld = setInterval(() => {
       if (state.selected) {
         state.selected.angle = (state.selected.angle + 0.01 + (2*Math.PI)) % (2*Math.PI);
-        canvas.draw(state);
+        canvas.draw();
       }
     }, 1);
   }
@@ -93,7 +44,7 @@ window.addEventListener('mousedown', e => {
     state.selected = state.hover;
     state.selected.origin = state.mouse;
   }
-  canvas.draw(state);
+  canvas.draw();
 });
 window.addEventListener('mousemove', e => {
   const newPoint = {
@@ -105,9 +56,13 @@ window.addEventListener('mousemove', e => {
   }
   state.hover = getClosestLight(state);
   state.mouse = {...newPoint};
-  canvas.draw(state);
+  canvas.draw();
 });
 
 document.getElementById('header-close').addEventListener('click', () => {
   document.getElementById('header').remove();
-})
+});
+
+// on page load
+canvas.calibrate();
+canvas.draw();

@@ -1,3 +1,4 @@
+import { state } from './state.js';
 
 const canvasElm = document.getElementById('canvas');
 const ctx = canvasElm.getContext('2d');
@@ -18,7 +19,9 @@ const calcRayPoint = (origin, angle, length) => {
   };
 }
 
-const draw = (s) => {
+const draw = () => {
+  const s = state; // shorthand
+
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, canvasElm.width, canvasElm.height);
 
@@ -61,6 +64,7 @@ const draw = (s) => {
   ctx.closePath();
   ctx.stroke();
 }
+
 export const canvas = {
   calibrate,
   draw,
