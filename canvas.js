@@ -31,12 +31,12 @@ const draw = (s) => {
       light.origin.x, light.origin.y, squareLength
     );
     grad.addColorStop(0, light.color);
-    grad.addColorStop(1, '#000000');
+    grad.addColorStop(1, '#00000000');
 
     ctx.fillStyle = grad;
     ctx.beginPath();
-    const leftPoint = calcRayPoint(light.origin, light.angle - light.window, squareLength*2);
-    const rightPoint = calcRayPoint(light.origin, light.angle + light.window, squareLength*2);
+    const leftPoint = calcRayPoint(light.origin, light.angle - light.window, squareLength*1.5);
+    const rightPoint = calcRayPoint(light.origin, light.angle + light.window, squareLength*1.5);
     ctx.moveTo(light.origin.x, light.origin.y);
     [leftPoint, rightPoint].forEach(p => {
       ctx.lineTo(p.x, p.y);
@@ -45,10 +45,19 @@ const draw = (s) => {
     ctx.fill();
   });
 
+  ctx.lineWidth = 5;
+  s.lights.forEach(light => {
+    if (light !== s.selected){
+      ctx.strokeStyle = light.color;
+      ctx.beginPath();
+      ctx.arc(light.origin.x, light.origin.y, s.mouseRadius/2, 0, 2*Math.PI, false);
+      ctx.closePath();
+      ctx.stroke();
+    }
+  });
   ctx.strokeStyle = s.selected ? s.selected.color : 'white';
   ctx.beginPath();
-  ctx.arc(s.mouse.x, s.mouse.y, 50, 0, 2*Math.PI, false);
-  ctx.lineWidth = 5;
+  ctx.arc(s.mouse.x, s.mouse.y, s.mouseRadius, 0, 2*Math.PI, false);
   ctx.closePath();
   ctx.stroke();
 }

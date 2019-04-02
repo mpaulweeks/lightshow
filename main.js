@@ -6,19 +6,19 @@ const state = {
   lights: [
     {
       origin: {x: 100, y: 100},
-      color: '#FF0000',
+      color: '#FF0000FF',
       angle: Math.PI * 0.5,
       window: Math.PI / 6,
     },
     {
       origin: {x: 300, y: 100},
-      color: '#00FF00',
+      color: '#00FF00FF',
       angle: Math.PI * 0.5,
       window: Math.PI / 6,
     },
     {
       origin: {x: 500, y: 100},
-      color: '#0000FF',
+      color: '#0000FFFF',
       angle: Math.PI * 0.5,
       window: Math.PI / 6,
     },
@@ -28,6 +28,7 @@ const state = {
     x: 0,
     y: 0,
   },
+  mouseRadius: 50,
 }
 
 let spaceHeld;
@@ -52,9 +53,21 @@ window.addEventListener('mousedown', e => {
   if (state.selected){
     state.selected = undefined;
   } else {
-    // todo
-    state.selected = state.lights[0];
-    state.selected.origin = state.mouse;
+    let nearestLight, nearestDistance;
+    state.lights.forEach(light => {
+      const distance = Math.sqrt(
+        Math.pow(state.mouse.x - light.origin.x, 2) +
+        Math.pow(state.mouse.y - light.origin.y, 2)
+      );
+      if (nearestDistance === undefined || distance < nearestDistance){
+        nearestLight = light;
+        nearestDistance = distance;
+      }
+    });
+    if (nearestDistance < state.mouseRadius) {
+      state.selected = nearestLight;
+      state.selected.origin = state.mouse;
+    }
   }
   canvas.draw(state);
 });
