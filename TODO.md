@@ -12,3 +12,5 @@
 - re-calibrate on resize
 - generate gradients on move? to make draw faster
 - move helpers/logic for the above into new `light.js` file
+- prisms?
+  - https://ncase.me/sight-and-light/ for hit detection
