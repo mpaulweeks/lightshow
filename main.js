@@ -40,6 +40,14 @@ const actions = [
     code: 'ArrowDown',
     callback: () => state.selected && state.selected.angleClose(),
   },
+  {
+    code: 'Equal',
+    callback: () => state.selected && state.selected.grow(),
+  },
+  {
+    code: 'Minus',
+    callback: () => state.selected && state.selected.shrink(),
+  },
 ].reduce((obj, action) => {
   obj[action.code] = {
     ...action,

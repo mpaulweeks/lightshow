@@ -4,41 +4,34 @@ export const state = {
   lights: [
     {
       origin: {x: 100, y: 300},
-      color: '#FF0000FF',
-      angle: Math.PI * 0.5,
-      window: Math.PI / 6,
+      color: '#FF0000',
     },
     {
       origin: {x: 200, y: 300},
-      color: '#00FF00FF',
-      angle: Math.PI * 0.5,
-      window: Math.PI / 6,
+      color: '#00FF00',
     },
     {
       origin: {x: 300, y: 300},
-      color: '#0000FFFF',
-      angle: Math.PI * 0.5,
-      window: Math.PI / 6,
+      color: '#0000FF',
     },
     {
       origin: {x: 400, y: 300},
-      color: '#FFFF00FF',
-      angle: Math.PI * 0.5,
-      window: Math.PI / 6,
+      color: '#FFFF00',
     },
     {
       origin: {x: 500, y: 300},
-      color: '#00FFFFFF',
-      angle: Math.PI * 0.5,
-      window: Math.PI / 6,
+      color: '#00FFFF',
     },
     {
       origin: {x: 600, y: 300},
-      color: '#FF00FFFF',
-      angle: Math.PI * 0.5,
-      window: Math.PI / 6,
+      color: '#FF00FF',
     },
-  ].map(data => new Light(data)),
+  ].map(data => new Light({
+    ...data,
+    angle: Math.PI * 0.5,
+    window: Math.PI / 6,
+    depth: document.body.clientWidth/2,
+  })),
   selected: undefined,
   hover: undefined,
   mouse: {

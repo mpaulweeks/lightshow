@@ -4,6 +4,7 @@ export class Light {
     this.color = data.color;
     this.angle = data.angle;
     this.window = data.window;
+    this.depth = data.depth;
   }
   clone() {
     return new Light({
@@ -25,5 +26,11 @@ export class Light {
   }
   angleClose() {
     this.window = Math.max(this.window - 0.01, 0.01);
+  }
+  grow() {
+    this.depth = Math.min(this.depth + 1, document.body.clientWidth);
+  }
+  shrink() {
+    this.depth = Math.max(this.depth - 1, 5);
   }
 }

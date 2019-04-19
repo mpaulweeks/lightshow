@@ -25,21 +25,18 @@ const draw = () => {
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, canvasElm.width, canvasElm.height);
 
-  const maxLength = Math.max(canvasElm.width, canvasElm.height);
-  const squareLength = Math.min(canvasElm.width, canvasElm.height);
-
   s.lights.forEach(light => {
     const grad = ctx.createRadialGradient(
       light.origin.x, light.origin.y, 0,
-      light.origin.x, light.origin.y, squareLength
+      light.origin.x, light.origin.y, light.depth
     );
-    grad.addColorStop(0, light.color);
-    grad.addColorStop(1, '#00000000');
+    grad.addColorStop(0, light.color + 'A0');
+    grad.addColorStop(1, light.color + '80');
 
     ctx.fillStyle = grad;
     ctx.beginPath();
-    const leftPoint = calcRayPoint(light.origin, light.angle - light.window, squareLength*1.5);
-    const rightPoint = calcRayPoint(light.origin, light.angle + light.window, squareLength*1.5);
+    const leftPoint = calcRayPoint(light.origin, light.angle - light.window, light.depth);
+    const rightPoint = calcRayPoint(light.origin, light.angle + light.window, light.depth);
     ctx.moveTo(light.origin.x, light.origin.y);
     [leftPoint, rightPoint].forEach(p => {
       ctx.lineTo(p.x, p.y);
