@@ -23,36 +23,56 @@ const toggleHeader = () => {
   document.getElementById('header').classList.toggle('hidden');
 };
 
-let arrowLeftHeld, arrowRightHeld;
+const actions = [
+  {
+    code: 'ArrowLeft',
+    callback: () => state.selected && state.selected.rotateCounterClockwise(),
+  },
+  {
+    code: 'ArrowRight',
+    callback: () => state.selected && state.selected.rotateClockwise(),
+  },
+  {
+    code: 'ArrowUp',
+    callback: () => state.selected && state.selected.angleOpen(),
+  },
+  {
+    code: 'ArrowDown',
+    callback: () => state.selected && state.selected.angleClose(),
+  },
+].reduce((obj, action) => {
+  obj[action.code] = {
+    ...action,
+    interval: undefined,
+  };
+  return obj;
+}, {});
+
 window.addEventListener('keydown', e => {
-  if (e.code === 'ArrowLeft' && !arrowLeftHeld){
-    arrowLeftHeld = setInterval(() => {
-      if (state.selected) {
-        state.selected.rotateCounterClockwise();
-        canvas.draw();
-      }
-    }, 1);
-  }
-  if (e.code === 'ArrowRight' && !arrowRightHeld){
-    arrowRightHeld = setInterval(() => {
-      if (state.selected) {
-        state.selected.rotateClockwise();
-        canvas.draw();
-      }
-    }, 1);
-  }
   if (e.code === 'Escape') {
     toggleHeader();
   }
+  if (e.code === 'KeyC') {
+    state.clone();
+    canvas.draw();
+  }
+  if (e.code === 'KeyD') {
+    state.delete();
+    canvas.draw();
+  }
+  const action = actions[e.code];
+  if (action && !action.interval){
+    action.interval = setInterval(() => {
+      action.callback();
+      canvas.draw();
+    }, 1);
+  }
 });
 window.addEventListener('keyup', e => {
-  if (e.code === 'ArrowLeft'){
-    clearInterval(arrowLeftHeld);
-    arrowLeftHeld = undefined;
-  }
-  if (e.code === 'ArrowRight'){
-    clearInterval(arrowRightHeld);
-    arrowRightHeld = undefined;
+  const action = actions[e.code];
+  if (action) {
+    clearInterval(action.interval);
+    action.interval = undefined;
   }
 });
 

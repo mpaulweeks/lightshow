@@ -5,6 +5,12 @@ export class Light {
     this.angle = data.angle;
     this.window = data.window;
   }
+  clone() {
+    return new Light({
+      ...this,
+      origin: {...this.origin},
+    });
+  }
   rotate(direction) {
     this.angle = (this.angle + (direction*0.01) + (2*Math.PI)) % (2*Math.PI);
   }
@@ -13,5 +19,11 @@ export class Light {
   }
   rotateCounterClockwise() {
     this.rotate(-1);
+  }
+  angleOpen() {
+    this.window = Math.min(this.window + 0.01, Math.PI/2.1);
+  }
+  angleClose() {
+    this.window = Math.max(this.window - 0.01, 0.01);
   }
 }

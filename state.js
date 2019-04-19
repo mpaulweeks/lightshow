@@ -46,4 +46,19 @@ export const state = {
     y: 0,
   },
   mouseRadius: 50,
+  clone: () => {
+    if (state.selected){
+      state.lights.push(state.selected.clone());
+    }
+  },
+  delete: () => {
+    if (state.selected){
+      const index = state.lights.indexOf(state.selected);
+      state.lights.splice(index, 1);
+      if (state.hover === state.selected){
+        state.hover = undefined;
+      }
+      state.selected = undefined;
+    }
+  }
 };
