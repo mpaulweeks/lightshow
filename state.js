@@ -1,3 +1,5 @@
+import { Light } from './model.js';
+
 export const state = {
   lights: [
     {
@@ -36,7 +38,7 @@ export const state = {
       angle: Math.PI * 0.5,
       window: Math.PI / 6,
     },
-  ],
+  ].map(data => new Light(data)),
   selected: undefined,
   hover: undefined,
   mouse: {

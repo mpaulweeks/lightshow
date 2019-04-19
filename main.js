@@ -17,23 +17,42 @@ const getClosestLight = (state) => {
     return nearestLight;
   }
   return null;
-}
+};
 
-let spaceHeld;
+const toggleHeader = () => {
+  document.getElementById('header').classList.toggle('hidden');
+};
+
+let arrowLeftHeld, arrowRightHeld;
 window.addEventListener('keydown', e => {
-  if (e.code === 'Space' && !spaceHeld){
-    spaceHeld = setInterval(() => {
+  if (e.code === 'ArrowLeft' && !arrowLeftHeld){
+    arrowLeftHeld = setInterval(() => {
       if (state.selected) {
-        state.selected.angle = (state.selected.angle + 0.01 + (2*Math.PI)) % (2*Math.PI);
+        state.selected.rotateCounterClockwise();
         canvas.draw();
       }
     }, 1);
   }
+  if (e.code === 'ArrowRight' && !arrowRightHeld){
+    arrowRightHeld = setInterval(() => {
+      if (state.selected) {
+        state.selected.rotateClockwise();
+        canvas.draw();
+      }
+    }, 1);
+  }
+  if (e.code === 'Escape') {
+    toggleHeader();
+  }
 });
 window.addEventListener('keyup', e => {
-  if (e.code === 'Space'){
-    clearInterval(spaceHeld);
-    spaceHeld = undefined;
+  if (e.code === 'ArrowLeft'){
+    clearInterval(arrowLeftHeld);
+    arrowLeftHeld = undefined;
+  }
+  if (e.code === 'ArrowRight'){
+    clearInterval(arrowRightHeld);
+    arrowRightHeld = undefined;
   }
 });
 
@@ -60,7 +79,7 @@ window.addEventListener('mousemove', e => {
 });
 
 document.getElementById('header-close').addEventListener('click', () => {
-  document.getElementById('header').remove();
+  toggleHeader();
 });
 
 // on page load
