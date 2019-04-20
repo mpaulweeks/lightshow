@@ -48,6 +48,14 @@ const actions = [
     code: 'Minus',
     callback: () => state.selected && state.selected.shrink(),
   },
+  {
+    code: 'Period',
+    callback: () => state.selected && state.selected.brighten(),
+  },
+  {
+    code: 'Comma',
+    callback: () => state.selected && state.selected.darken(),
+  },
 ].reduce((obj, action) => {
   obj[action.code] = {
     ...action,
@@ -57,6 +65,7 @@ const actions = [
 }, {});
 
 window.addEventListener('keydown', e => {
+  console.log(e.code);
   if (e.code === 'Escape') {
     toggleHeader();
   }

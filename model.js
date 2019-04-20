@@ -1,7 +1,9 @@
+import { Color } from './color.js';
+
 export class Light {
   constructor(data) {
     this.origin = data.origin;
-    this.color = data.color;
+    this.color = Color.fromHex(data.color);
     this.angle = data.angle;
     this.window = data.window;
     this.depth = data.depth;
@@ -10,6 +12,7 @@ export class Light {
     return new Light({
       ...this,
       origin: {...this.origin},
+      color: this.color.toHex(),
     });
   }
   rotate(direction) {
@@ -32,5 +35,11 @@ export class Light {
   }
   shrink() {
     this.depth = Math.max(this.depth - 1, 5);
+  }
+  brighten() {
+    this.color.brighten();
+  }
+  darken() {
+    this.color.darken();
   }
 }

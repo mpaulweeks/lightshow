@@ -30,8 +30,8 @@ const draw = () => {
       light.origin.x, light.origin.y, 0,
       light.origin.x, light.origin.y, light.depth
     );
-    grad.addColorStop(0, light.color + 'A0');
-    grad.addColorStop(1, light.color + '80');
+    grad.addColorStop(0, light.color.toHex());
+    grad.addColorStop(1, light.color.toHex());
 
     ctx.fillStyle = grad;
     ctx.beginPath();
@@ -48,14 +48,14 @@ const draw = () => {
   ctx.lineWidth = 5;
   s.lights.forEach(light => {
     if (light !== s.selected){
-      ctx.strokeStyle = light === s.hover ? 'white' : light.color;
+      ctx.strokeStyle = light === s.hover ? 'white' : light.color.toHexPure();
       ctx.beginPath();
       ctx.arc(light.origin.x, light.origin.y, s.mouseRadius/2, 0, 2*Math.PI, false);
       ctx.closePath();
       ctx.stroke();
     }
   });
-  ctx.strokeStyle = s.selected ? s.selected.color : 'white';
+  ctx.strokeStyle = s.selected ? s.selected.color.toHexPure() : 'white';
   ctx.beginPath();
   ctx.arc(s.mouse.x, s.mouse.y, s.mouseRadius, 0, 2*Math.PI, false);
   ctx.closePath();

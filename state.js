@@ -31,6 +31,7 @@ export const state = {
     angle: Math.PI * 0.5,
     window: Math.PI / 6,
     depth: document.body.clientWidth/2,
+    color: data.color + 'A0',
   })),
   selected: undefined,
   hover: undefined,
