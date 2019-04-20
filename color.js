@@ -4,6 +4,8 @@ export class Color {
     this.g = parts.g;
     this.b = parts.b;
     this.a = parts.a;
+    // todo this is not 1:1 with starting colors
+    this.step = Math.floor(Math.asin((this.r - 127) / 128)/0.2);
   }
 
   brighten() {
@@ -11,6 +13,16 @@ export class Color {
   }
   darken() {
     this.a = Math.max(this.a - 1, 0);
+  }
+
+  normalizeRGB(val) {
+    return Math.min(255, Math.max(0, Math.floor(val)));
+  }
+  cycleRainbow() {
+    this.step += 1;
+    this.r = this.normalizeRGB((Math.sin((0.02 * this.step) + (0 * 2)) * 128) + 127);
+    this.g = this.normalizeRGB((Math.sin((0.02 * this.step) + (1 * 2)) * 128) + 127);
+    this.b = this.normalizeRGB((Math.sin((0.02 * this.step) + (2 * 2)) * 128) + 127);
   }
 
   toHex() {

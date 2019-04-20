@@ -36,10 +36,4 @@ export class Light {
   shrink() {
     this.depth = Math.max(this.depth - 1, 5);
   }
-  brighten() {
-    this.color.brighten();
-  }
-  darken() {
-    this.color.darken();
-  }
 }

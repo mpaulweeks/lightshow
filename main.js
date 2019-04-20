@@ -50,11 +50,15 @@ const actions = [
   },
   {
     code: 'Period',
-    callback: () => state.selected && state.selected.brighten(),
+    callback: () => state.selected && state.selected.color.brighten(),
   },
   {
     code: 'Comma',
-    callback: () => state.selected && state.selected.darken(),
+    callback: () => state.selected && state.selected.color.darken(),
+  },
+  {
+    code: 'Slash',
+    callback: () => state.selected && state.selected.color.cycleRainbow(),
   },
 ].reduce((obj, action) => {
   obj[action.code] = {
